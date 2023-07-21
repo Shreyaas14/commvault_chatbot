@@ -29,43 +29,30 @@
       {
         "tag": "thanks",
         "patterns": ["Thanks", "Thank you", "That's helpful", "Thanks a lot!"],
-        "responses": ["Happy to help!", "Any time!", "My pleasure"]
+        "responses": ["Happy to help!", "Any time!", "My pleasure."]
       },
       {
-        "tag": "items",
+        "tag": "issue",
         "patterns": [
-          "Which items do you have?",
-          "What kinds of items are there?",
-          "What do you sell?"
+          "I am having an issue with Commvault.",
+          "I am having a problem with Commvault.",
+          "I need help",
+          "Could you help me?"
         ],
         "responses": [
-          "We sell coffee and tea",
-          "We have coffee and tea"
+          "Sure, how can I help?"
         ]
       },
       {
-        "tag": "payments",
+        "tag": "issue_two",
         "patterns": [
-          "Do you take credit cards?",
-          "Do you accept Mastercard?",
-          "Can I pay with Paypal?",
-          "Are you cash only?"
+          "That was not helpful.",
+          "Can you send another article?",
+          "That is not what I was asking",
+          "That did not help"
         ],
         "responses": [
-          "We accept VISA, Mastercard and Paypal",
-          "We accept most major credit cards, and Paypal"
-        ]
-      },
-      {
-        "tag": "delivery",
-        "patterns": [
-          "How long does delivery take?",
-          "How long does shipping take?",
-          "When do I get my delivery?"
-        ],
-        "responses": [
-          "Delivery takes 2-4 days",
-          "Shipping takes 2-4 days"
+          "Sure, let me try again."
         ]
       },
       {
@@ -76,8 +63,7 @@
           "Do you know a joke?"
         ],
         "responses": [
-          "Why did the hipster burn his mouth? He drank the coffee before it was cool.",
-          "What did the buffalo say when his son left for college? Bison."
+         "What did the buffalo say when his son left for college? Bison."
         ]
       }
     ]

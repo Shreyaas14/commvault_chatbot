@@ -6,6 +6,8 @@ import torch
 from model import NeuralNet
 from nltk_utils import bag_of_words, tokenize
 
+from xml_nlp import get_most_similar_urls
+
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 with open('intents.json', 'r') as json_data:
@@ -25,15 +27,10 @@ model = NeuralNet(input_size, hidden_size, output_size).to(device)
 model.load_state_dict(model_state)
 model.eval()
 
-bot_name = "Sam"
-print("Let's chat! (type 'quit' to exit)")
-while True:
-    # sentence = "do you use credit cards?"
-    sentence = input("You: ")
-    if sentence == "quit":
-        break
+bot_name = "Commvault ChatBot"
 
-    sentence = tokenize(sentence)
+def get_response(msg):
+    sentence = tokenize(msg)
     X = bag_of_words(sentence, all_words)
     X = X.reshape(1, X.shape[0])
     X = torch.from_numpy(X).to(device)
@@ -45,9 +42,32 @@ while True:
 
     probs = torch.softmax(output, dim=1)
     prob = probs[0][predicted.item()]
-    if prob.item() > 0.75:
+
+    if tag == "issue":
+        article_urls = get_most_similar_urls(msg)
+        response = "Here is an article that may help you: " + article_urls[0]
+        return response
+    
+    if tag == "issue_two":
+        article_urls = get_most_similar_urls(msg)
+        response = "I'm sorry that the previous suggestion did not help. Try this: " + article_urls[1]
+        return response
+        
+    elif tag != "issue" and tag != "issue_two" and prob.item() > 0.75:
         for intent in intents['intents']:
             if tag == intent["tag"]:
-                print(f"{bot_name}: {random.choice(intent['responses'])}")
-    else:
-        print(f"{bot_name}: I do not understand...")
+                return random.choice(intent['responses'])
+    
+    return "I do not understand..."
+
+
+if __name__ == "__main__":
+    print("Let's chat! (type 'quit' to exit)")
+    while True:
+        # sentence = "do you use credit cards?"
+        sentence = input("You: ")
+        if sentence == "quit":
+            break
+
+        resp = get_response(sentence)
+        print(resp)
